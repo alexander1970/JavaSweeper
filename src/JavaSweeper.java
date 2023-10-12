@@ -1,6 +1,8 @@
 import javax.swing.*;
 import java.awt.*;
 import sweeper.Box;
+import sweeper.Coord;
+import sweeper.Ranges;
 
 public class JavaSweeper extends JFrame
 {
@@ -16,6 +18,7 @@ public class JavaSweeper extends JFrame
 
     private JavaSweeper()
     {
+        Ranges.setSize(new Coord(COLS, ROWS));
         setImages();
         initPanel();
         initFrame();
@@ -30,12 +33,16 @@ public class JavaSweeper extends JFrame
             {
                 super.paintComponent(g);
                 for (Box box : Box.values())
-                    g.drawImage((Image)box.image,
-                            box.ordinal() * IMAGE_SIZE, 0, this);
+                {
+                    Coord coord = new Coord(box.ordinal() * IMAGE_SIZE, 0);
+                    g.drawImage((Image) box.image,
+                            coord.x, coord.y, this);
+                }
             }
         };
         panel.setPreferredSize(new Dimension(
-                COLS * IMAGE_SIZE, ROWS * IMAGE_SIZE));
+                Ranges.getSize().x * IMAGE_SIZE,
+                Ranges.getSize().y * IMAGE_SIZE));
         add(panel);
     }
 
