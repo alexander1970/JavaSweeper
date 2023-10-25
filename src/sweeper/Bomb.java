@@ -26,5 +26,7 @@ public class Bomb
     {
         Coord coord = Ranges.getRandomCoord();
         bombMap.set(coord, Box.BOMB);
+        for (Coord around : Ranges.getCoordsAround(coord))
+            bombMap.set(around, Box.NUM1);
     }
 }
